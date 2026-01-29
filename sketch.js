@@ -1,27 +1,19 @@
 //roughly converted from my allolib project
 
-// IMAGES FROM THE SPHERE HERE ----->>>> 
+// IMAGES FROM THE SPHERE HERE ----->>>>
 // https://drive.google.com/file/d/1OJqO5nI-KPeKguC93LXGrdsRrH8cxuqk/view?usp=sharing
 
 //README:
 // TOGGLE 1-9 SHADERS. pics of more shaders in pdf
-// VIEW RESULTS IN THE SPHERE HERE: 
+// VIEW RESULTS IN THE SPHERE HERE:
 
 // for slider 1 - 3 :
 //TOP SLIDER = FAKE CENTROID - influences speed
 //PRESS SPACE = FAKE ONSET
 
-
-
-
-
 let slider;
-let onset= 0.1;
+let onset = 0.1;
 let currentShader;
-
-
- 
-
 
 function preload() {
   shader1 = loadShader("main.vert", "fractal1.frag");
@@ -32,38 +24,39 @@ function preload() {
   shader6 = loadShader("main.vert", "fractalNoise2.frag");
   shader7 = loadShader("main.vert", "psych1.frag");
   shader8 = loadShader("main.vert", "psych2.frag");
-  shader9 = loadShader("main.vert", "sunExplode.frag");
+  //shader9 = loadShader("main.vert", "sunExplode.frag");
+  shader9 = loadShader("main.vert", "newShaders/Algal.frag");
+  shader10 = loadShader("main.vert", "newShaders/Fluid.frag");
+  shader11 = loadShader("main.vert", "newShaders/Sun.frag");
 }
-
 
 function setup() {
   createCanvas(100, 100, WEBGL);
   noStroke();
-  
-   slider = createSlider(100.0, 4000.0, 1.0);
+
+  slider = createSlider(100.0, 4000.0, 1.0);
   slider.position(10, 10);
-  slider.size(80)
+  slider.size(80);
   currentShader = shader1;
 }
 
 function draw() {
-   
-  if (keyIsDown(49 ) == true) {
+  if (keyIsDown(49) == true) {
     currentShader = shader1;
   } //asci 49 is = #1 i think
-  if (keyIsDown(50 ) == true) {
+  if (keyIsDown(50) == true) {
     currentShader = shader2;
   }
-  if (keyIsDown(51 ) == true) {
+  if (keyIsDown(51) == true) {
     currentShader = shader3;
   }
-  if (keyIsDown(52 ) == true) {
+  if (keyIsDown(52) == true) {
     currentShader = shader4;
   }
   if (keyIsDown(53) == true) {
     currentShader = shader5;
   }
-  
+
   if (keyIsDown(54) == true) {
     currentShader = shader6;
   }
@@ -76,27 +69,28 @@ function draw() {
   if (keyIsDown(57) == true) {
     currentShader = shader9;
   }
-  //if (keyIsDown(58) == true) {
-  //   currentShader = shader10;
-  // }
-  
+  if (keyIsDown(81) == true) {
+    currentShader = shader10;
+  }
+
   shader(currentShader);
-  
-  if (keyIsDown(32 ) == true) {
-    onset +=0.1;
+
+  if (keyIsDown(32) == true) {
+    onset += 0.1;
   }
 
   currentShader.setUniform("u_time", millis() / 1000.0);
   currentShader.setUniform("onset", onset);
-  currentShader.setUniform("cent", slider.value()); 
-  currentShader.setUniform("flux", 0.5); 
+  currentShader.setUniform("cent", slider.value());
+  currentShader.setUniform("flux", 0.5);
 
   //rect(-width / 2, -height / 2, width, height);
-quad(-1, 1, 1, 1, 1, -1, -1, -1);
-
+  quad(-1, 1, 1, 1, 1, -1, -1, -1);
 }
 
 function keyPressed() {
+  fullscreen(true);
+  console.log("Key pressed:", key, "KeyCode:", keyCode);
   fullscreen(true);
 }
 
